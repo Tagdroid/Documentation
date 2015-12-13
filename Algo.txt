@@ -1,0 +1,54 @@
+
+http://transinfoservice.ws.cityway.fr/TAG/api/transport/v2/GetPhysicalStops/json?key=TAGDEV
+http://transinfoservice.ws.cityway.fr/TAG/api/transport/v2/GetLines/json?key=TAGDEV&OperatorId=1
+http://transinfoservice.ws.cityway.fr/TAG/api/TimeTables/v2/GetNextStopHours/json?key=TAGDEV&StopId=1133
+http://transinfoservice.ws.cityway.fr/TAG/api/disruption/v1/GetActualAndFutureDisruptions/json?key=TAGDEV&DateTime=2014-10-14_11-50
+
+
+
+
+Au démarrage :
+ ==> Find Database
+ ==> IF(not exist) create database json to sqlite (GetPhysicalStops) de toutes les stations ==> Process un peu long, Loadbar
+ ==> ELSE rien
+
+
+Slide Menu :
+ ==> Ajouter bouton pour MAJ Database + Dialog box pour confirmer + Détection Connexion Internet et autres exceptions
+
+Accueil :
+	==> IF(message new sur server) load message + display dialogbox
+	==> ELSE rien
+
+	Ligne :
+		==> GetStatusLine : Vérifier si problème sur la ligne (now & futur) IF TRUE alors afficher une dialog box
+		==> Display ListView des stations de la ligne depuis database
+
+		Stop :
+			==> Read db_fav
+			==> GetStatusStop
+			==> GetInfoStop
+				==> GPS Coordonnées
+				==> Display city (ex : "GRENOBLE, 38000")
+				==> Display logo line over Google Logo bottom left
+			==> Get other lines of Stop and display logo_button in first encadré.
+			// Encadré : Vers 1
+				==> GetStopHours : Display 4 nexts
+				==> Horaires théoriques : Horaire de la journée pour un sens donné
+					==> Proposer horaire théorique sur une autre date
+			// Encadré : Vers 2
+				==> GetStopHours : Display 4 nexts
+				==> Horaires théoriques : Horaire de la journée pour un sens donné
+					==> Proposer horaire théorique sur une autre date
+			==> Favoris : Find db_fav IF(NULL) create it.
+
+Favoris :
+	==> Read db_fav and Display
+
+Proximité :
+	==> Comparaison avec Coordonnée database + Calcul and Display
+
+Carte :
+
+Info Trafic :
+	==> GetInfoReseau
